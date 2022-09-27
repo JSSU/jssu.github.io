@@ -12,18 +12,18 @@
 
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  <meta name="description" content="Designing Yelp or Nearby FriendsLet’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of pl">
+  <meta name="description" content="Designing Yelp or Nearby Friends">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yelp_nearby_friends">
 <meta property="og:url" content="https://jssu.github.io/2022/09/26/yelp-nearby-friends/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Designing Yelp or Nearby FriendsLet’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of pl">
+<meta property="og:description" content="Designing Yelp or Nearby Friends">
 <meta property="og:locale">
 <meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309149000_10220946452506629_7105713191113436879_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0debeb&_nc_ohc=XDohN0KRYNAAX9XNAOy&_nc_ht=scontent-sjc3-1.xx&oh=00_AT8EiiFyxmvYDMET7XLhOqAweCxRecMz2qXshkvtOIwNPA&oe=6336C6D5">
 <meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/305638304_10220946481067343_3475970560453112676_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=0debeb&_nc_ohc=p7H3iEZ0jO8AX9yyB1-&_nc_ht=scontent-sjc3-1.xx&oh=00_AT9p7VxOfUhbGCwmZNcKODfiXMsx7Hnms86RwDSueXKLRw&oe=6337381E">
 <meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309180254_10220946559909314_385458177550335166_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0debeb&_nc_ohc=ch7NsqiUQfwAX9Di7Tt&_nc_ht=scontent-sjc3-1.xx&oh=00_AT_ES2TFEGbvJh9G_nlIrhDN7X5-HDnRntkoFVe90xKAfw&oe=63367979">
 <meta property="article:published_time" content="2022-09-27T00:41:53.000Z">
-<meta property="article:modified_time" content="2022-09-27T02:22:12.418Z">
+<meta property="article:modified_time" content="2022-09-27T03:32:19.923Z">
 <meta property="article:author" content="Junsu Shen">
 <meta property="article:tag" content="sysDesign">
 <meta name="twitter:card" content="summary">
@@ -66,6 +66,7 @@
   <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
   <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
   <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <script id="dsq-count-scr" src="//jssu-github-io.disqus.com/count.js" async></script>
   <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
   <div class="mdui-toolbar mdui-color-theme">
     <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
@@ -182,7 +183,7 @@
   <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
   <article class="mdui-card mdui-m-b-5">
     <header class="mdui-card-media">
-      <img src="/images/random/material-17.png" style="max-height: 240px;">
+      <img src="/images/random/material-1.png" style="max-height: 240px;">
       <div class="mdui-card-media-covered">
         <div class="mdui-card-primary">
           <div class="mdui-card-primary-title">yelp_nearby_friends</div>
@@ -232,7 +233,9 @@
       </div>
     </header>
     <div class="mdui-card-content mdui-typo">
-      <h1 id="Designing-Yelp-or-Nearby-Friends"><a href="#Designing-Yelp-or-Nearby-Friends" class="headerlink" title="Designing Yelp or Nearby Friends"></a>Designing Yelp or Nearby Friends</h1><p>Let’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of places.</p>
+      <h1 id="Designing-Yelp-or-Nearby-Friends"><a href="#Designing-Yelp-or-Nearby-Friends" class="headerlink" title="Designing Yelp or Nearby Friends"></a>Designing Yelp or Nearby Friends</h1><span id="more"></span>
+
+<p>Let’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of places.</p>
 <h2 id="1-Why-Yelp-or-Proximity-Server"><a href="#1-Why-Yelp-or-Proximity-Server" class="headerlink" title="1. Why Yelp or Proximity Server?"></a>1. Why Yelp or Proximity Server?</h2><p>Proximity servers are used to discover nearby attractions like places, events, etc. If you haven’t used yelp.com before, please try it before proceeding (you can search for nearby restaurants, theaters, etc.) and spend some time understanding different options that the website offers. This will help you a lot in understanding this chapter better.</p>
 <h2 id="2-Requirements-and-Goals-of-the-System"><a href="#2-Requirements-and-Goals-of-the-System" class="headerlink" title="2. Requirements and Goals of the System"></a>2. Requirements and Goals of the System</h2><p><strong>What do we wish to achieve from a Yelp like service?</strong> Our service will be storing information about different places so that users can perform a search on them. Upon querying, our service will return a list of places around the user.</p>
 <p>Our Yelp-like service should meet the following requirements:</p>
@@ -349,7 +352,7 @@
       
       <blockquote>
         
-        <strong>PermaLink: </strong><br><a href="https://jssu.github.io/2022/09/26/yelp-nearby-friends/">https://jssu.github.io/2022/09/26/yelp-nearby-friends/</a>
+        <strong>PermaLink: </strong><br><a href="https://jssu.github.io/2022/09/26/yelp-nearby-friends/#disqus_thread">https://jssu.github.io/2022/09/26/yelp-nearby-friends/</a>
       </blockquote>
     </div>
     <footer class="mdui-card-actions">
@@ -378,6 +381,24 @@
     
   </nav>
 
+
+  <div id="comment" class="mdui-m-t-5">
+    <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = 'https://jssu.github.io/2022/09/26/yelp-nearby-friends/';
+    this.page.identifier = 'https://jssu.github.io/2022/09/26/yelp-nearby-friends/';
+  };
+  (function () {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jssu-github-io.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
 
 
 
