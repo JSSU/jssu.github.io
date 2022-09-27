@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="cn, en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>yelp_nearby_friends | Hexo</title>
+
+  <link rel="shortcut icon" href="/images/favicon.png">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <meta name="description" content="Designing Yelp or Nearby FriendsLet’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of pl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yelp_nearby_friends">
+<meta property="og:url" content="https://jssu.github.io/2022/09/26/yelp-nearby-friends/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Designing Yelp or Nearby FriendsLet’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of pl">
+<meta property="og:locale">
+<meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309149000_10220946452506629_7105713191113436879_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0debeb&_nc_ohc=XDohN0KRYNAAX9XNAOy&_nc_ht=scontent-sjc3-1.xx&oh=00_AT8EiiFyxmvYDMET7XLhOqAweCxRecMz2qXshkvtOIwNPA&oe=6336C6D5">
+<meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/305638304_10220946481067343_3475970560453112676_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=0debeb&_nc_ohc=p7H3iEZ0jO8AX9yyB1-&_nc_ht=scontent-sjc3-1.xx&oh=00_AT9p7VxOfUhbGCwmZNcKODfiXMsx7Hnms86RwDSueXKLRw&oe=6337381E">
+<meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309180254_10220946559909314_385458177550335166_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0debeb&_nc_ohc=ch7NsqiUQfwAX9Di7Tt&_nc_ht=scontent-sjc3-1.xx&oh=00_AT_ES2TFEGbvJh9G_nlIrhDN7X5-HDnRntkoFVe90xKAfw&oe=63367979">
+<meta property="article:published_time" content="2022-09-27T00:41:53.000Z">
+<meta property="article:modified_time" content="2022-09-27T02:22:12.418Z">
+<meta property="article:author" content="Junsu Shen">
+<meta property="article:tag" content="sysDesign">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309149000_10220946452506629_7105713191113436879_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0debeb&_nc_ohc=XDohN0KRYNAAX9XNAOy&_nc_ht=scontent-sjc3-1.xx&oh=00_AT8EiiFyxmvYDMET7XLhOqAweCxRecMz2qXshkvtOIwNPA&oe=6336C6D5">
+
+  <meta name="keywords" content=",sysDesign">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Hexo">
+  <meta name="msapplication-starturl" content="https://jssu.github.io/2022/09/26/yelp-nearby-friends/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Hexo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.png">
+
+  
+    <link rel="canonical" href="https://jssu.github.io/2022/09/26/yelp-nearby-friends/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">Hexo</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'Search'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="start to search"><input type="hidden" name="sitesearch" value="https://jssu.github.io"></form>
+    <div class="search-result"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.png" style="height: 160px;">
+    <img src="/images/avatar.png" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">Junsu Shen</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">Home</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">Archive</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/09/">September 2022<span class="mdui-ripple sidebar_archives-count">3</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">Category</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Categories</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">Tag</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/tags/amazon/" rel="tag">amazon<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/bfs/" rel="tag">bfs<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/leetcode/" rel="tag">leetcode<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/sysDesign/" rel="tag">sysDesign<span class="mdui-ripple sidebar_archives-count">1</span></a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">About</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">Timeline</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">TagCloud</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">Gallery</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">Links</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Links</a>
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-17.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">yelp_nearby_friends</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-09-26 / <i class="iconfont">&#xe601;</i> Junsu Shen</div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">send to phone</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="//chart.googleapis.com/chart?cht=qr&chs=246x246&chl=https://jssu.github.io/2022/09/26/yelp-nearby-friends/&chld=M|2">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=yelp_nearby_friends&url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/&pic=https://jssu.github.io/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=yelp_nearby_friends&url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/&via=Junsu Shen" target="_blank" class="mdui-ripple">Share to Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://jssu.github.io/2022/09/26/yelp-nearby-friends/" target="_blank" class="mdui-ripple">Share to Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/" target="_blank" class="mdui-ripple">Share to Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/&title=yelp_nearby_friends" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=Hexo&title=yelp_nearby_friends&pics=https://jssu.github.io/images/favicon.png&url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/" target="_blank" class="mdui-ripple">Share to QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=https://jssu.github.io/2022/09/26/yelp-nearby-friends/&text=yelp_nearby_friends" target="_blank" class="mdui-ripple">Share to Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <h1 id="Designing-Yelp-or-Nearby-Friends"><a href="#Designing-Yelp-or-Nearby-Friends" class="headerlink" title="Designing Yelp or Nearby Friends"></a>Designing Yelp or Nearby Friends</h1><p>Let’s design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add&#x2F;view reviews of places.</p>
+<h2 id="1-Why-Yelp-or-Proximity-Server"><a href="#1-Why-Yelp-or-Proximity-Server" class="headerlink" title="1. Why Yelp or Proximity Server?"></a>1. Why Yelp or Proximity Server?</h2><p>Proximity servers are used to discover nearby attractions like places, events, etc. If you haven’t used yelp.com before, please try it before proceeding (you can search for nearby restaurants, theaters, etc.) and spend some time understanding different options that the website offers. This will help you a lot in understanding this chapter better.</p>
+<h2 id="2-Requirements-and-Goals-of-the-System"><a href="#2-Requirements-and-Goals-of-the-System" class="headerlink" title="2. Requirements and Goals of the System"></a>2. Requirements and Goals of the System</h2><p><strong>What do we wish to achieve from a Yelp like service?</strong> Our service will be storing information about different places so that users can perform a search on them. Upon querying, our service will return a list of places around the user.</p>
+<p>Our Yelp-like service should meet the following requirements:</p>
+<p><strong>Functional Requirements:</strong></p>
+<ol>
+<li>Users should be able to add&#x2F;delete&#x2F;update Places.</li>
+<li>Given their location (longitude&#x2F;latitude), users should be able to find all nearby places within a given radius.</li>
+<li>Users should be able to add feedback&#x2F;review about a place. The feedback can have pictures, text, and a rating.</li>
+</ol>
+<p><strong>Non-functional Requirements:</strong></p>
+<ol>
+<li>Users should have a real-time search experience with minimum latency.</li>
+<li>Traffic - Our service should support a heavy search load. There will be a lot of search requests compared to adding a new place.</li>
+</ol>
+<h2 id="3-Scale-Estimation"><a href="#3-Scale-Estimation" class="headerlink" title="3. Scale Estimation"></a>3. Scale Estimation</h2><p>Let’s build our system assuming that we have 500M places and 100K queries per second (QPS). Let’s also assume a 20% growth in the number of places and QPS each year.</p>
+<h2 id="4-Database-Schema"><a href="#4-Database-Schema" class="headerlink" title="4. Database Schema"></a>4. Database Schema</h2><p>Each Place can have the following fields:</p>
+<ol>
+<li>LocationID (8 bytes): Uniquely identifies a location.</li>
+<li>Name (256 bytes)</li>
+<li>Latitude (8 bytes)</li>
+<li>Longitude (8 bytes)</li>
+<li>Description (512 bytes)</li>
+<li>Category (1 byte): E.g., coffee shop, restaurant, theater, etc.</li>
+</ol>
+<p>Although a four bytes number can uniquely identify 500M locations, with future growth in mind, we will go with 8 bytes for LocationID.</p>
+<p>Total size: 8 + 256 + 8 + 8 + 512 + 1 &#x3D;&gt; 793 bytes</p>
+<p>We also need to store reviews, photos, and ratings of a Place. We can have a separate table to store reviews for Places:</p>
+<ol>
+<li>LocationID (8 bytes)</li>
+<li>ReviewID (4 bytes): Uniquely identifies a review, assuming any location will not have more than 2^32 reviews.</li>
+<li>ReviewText (512 bytes)</li>
+<li>Rating (1 byte): how many stars a place gets out of ten.</li>
+</ol>
+<p>Similarly, we can have a separate table to store photos for Places and Reviews.</p>
+<h2 id="5-System-APIs"><a href="#5-System-APIs" class="headerlink" title="5. System APIs"></a>5. System APIs</h2><p>We can have SOAP or REST APIs to expose the functionality of our service. The following could be the definition of the API for searching:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">search(api_dev_key, search_terms, user_location, radius_filter, maximum_results_to_return, </span><br><span class="line">    category_filter, sort, page_token)</span><br></pre></td></tr></table></figure>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.</li>
+<li>search_terms (string): A string containing the search terms.</li>
+<li>user_location (string): Location of the user performing the search.</li>
+<li>radius_filter (number): Optional search radius in meters.</li>
+<li>maximum_results_to_return (number): Number of business results to return.</li>
+<li>category_filter (string): Optional category to filter search results, e.g., Restaurants, Shopping Centers, etc.</li>
+<li>sort (number): Optional sort mode: Best matched (0 - default), Minimum distance (1), Highest rated (2).</li>
+<li>page_token (string): This token will specify a page in the result set that should be returned.</li>
+</ul>
+<p><strong>Returns</strong>: (JSON)<br>A JSON containing information about a list of businesses matching the search query. Each result entry will have the business name, address, category, rating, and thumbnail.</p>
+<h2 id="6-Basic-System-Design-and-Algorithm"><a href="#6-Basic-System-Design-and-Algorithm" class="headerlink" title="6. Basic System Design and Algorithm"></a>6. Basic System Design and Algorithm</h2><p>At a high level, we need to store and index each dataset described above (places, reviews, etc.). For users to query this massive database, the indexing should be read efficient, since while searching for the nearby places users expect to see the results in real-time.</p>
+<p>Given that the location of a place doesn’t change that often, we don’t need to worry about frequent updates of the data. As a contrast, if we intend to build a service where objects do change their location frequently, e.g., people or taxis, then we might come up with a very different design.</p>
+<p>Let’s see what are different ways to store this data and also find out which method will suit best for our use cases:</p>
+<h3 id="a-SQL-solution"><a href="#a-SQL-solution" class="headerlink" title="a. SQL solution"></a>a. SQL solution</h3><p>One simple solution could be to store all the data in a database like MySQL. Each place will be stored in a separate row, uniquely identified by LocationID. Each place will have its longitude and latitude stored separately in two different columns, and to perform a fast search; we should have indexes on both these fields.</p>
+<p>To find all the nearby places of a given location (X, Y) within a radius ‘D’, we can query like this:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> Places</span><br><span class="line"><span class="keyword">where</span> Latitude <span class="keyword">between</span> X<span class="operator">-</span>D <span class="keyword">and</span> X<span class="operator">+</span>D </span><br><span class="line">  <span class="keyword">and</span> Longitude <span class="keyword">between</span> Y<span class="operator">-</span>D <span class="keyword">and</span> Y<span class="operator">+</span>D</span><br></pre></td></tr></table></figure>
+
+<p>The above query is not completely accurate, as we know that to find the distance between two points we have to use the distance formula (Pythagorean theorem), but for simplicity let’s take this.</p>
+<p><strong>How efficient would this query be?</strong> We have estimated 500M places to be stored in our service. Since we have two separate indexes, each index can return a huge list of places and performing an intersection on those two lists won’t be efficient. Another way to look at this problem is that there could be too many locations between ‘X-D’ and ‘X+D’, and similarly between ‘Y-D’ and ‘Y+D’. If we can somehow shorten these lists, it can improve the performance of our query.</p>
+<h3 id="b-Grids"><a href="#b-Grids" class="headerlink" title="b. Grids"></a>b. Grids</h3><p>We can divide the whole map into smaller grids to group locations into smaller sets. Each grid will store all the Places residing within a specific range of longitude and latitude. This scheme would enable us to query only a few grids to find nearby places. Based on a given location and radius, we can find all the neighboring grids and then query these grids to find nearby places.</p>
+<p><img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309149000_10220946452506629_7105713191113436879_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0debeb&_nc_ohc=XDohN0KRYNAAX9XNAOy&_nc_ht=scontent-sjc3-1.xx&oh=00_AT8EiiFyxmvYDMET7XLhOqAweCxRecMz2qXshkvtOIwNPA&oe=6336C6D5" alt="image"></p>
+<p>Let’s assume that GridID (a four bytes number) would uniquely identify grids in our system.</p>
+<p><strong>What could be a reasonable grid size?</strong> Grid size could be equal to the distance we would like to query since we also want to reduce the number of grids. If the grid size is equal to the distance we want to query, then we only need to search within the grid which contains the given location and neighboring eight grids. Since our grids would be statically defined (from the fixed grid size), we can easily find the grid number of any location (lat, long) and its neighboring grids.</p>
+<p>In the database, we can store the GridID with each location and have an index on it, too, for faster searching. Now, our query will look like:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> Places </span><br><span class="line"><span class="keyword">where</span> Latitude <span class="keyword">between</span> X<span class="operator">-</span>D <span class="keyword">and</span> X<span class="operator">+</span>D </span><br><span class="line">  <span class="keyword">and</span> Longitude <span class="keyword">between</span> Y<span class="operator">-</span>D <span class="keyword">and</span> Y<span class="operator">+</span>D </span><br><span class="line">  <span class="keyword">and</span> GridID <span class="keyword">in</span> (GridID, GridID1, GridID2, ..., GridID8)</span><br></pre></td></tr></table></figure>
+
+<p>This will undoubtedly improve the runtime of our query.</p>
+<p><strong>Should we keep our index in memory?</strong> Maintaining the index in memory will improve the performance of our service. We can keep our index in a hash table where ‘key’ is the grid number and ‘value’ is the list of places contained in that grid.</p>
+<p><strong>How much memory will we need to store the index?</strong> Let’s assume our search radius is 10 miles; given that the total area of the earth is around 200 million square miles, we will have 20 million grids. We would need a four bytes number to uniquely identify each grid and, since LocationID is 8 bytes, we would need 4GB of memory (ignoring hash table overhead) to store the index.</p>
+<center> (4 * 20M) + (8 * 500M) ~= 4 GB </center>
+
+<p>This solution can still run slow for those grids that have a lot of places since our places are not uniformly distributed among grids. We can have a thickly dense area with a lot of places, and on the other hand, we can have areas which are sparsely populated.</p>
+<p>This problem can be solved if we can dynamically adjust our grid size such that whenever we have a grid with a lot of places we break it down to create smaller grids. A couple of challenges with this approach could be: 1) how to map these grids to locations and 2) how to find all the neighboring grids of a grid.</p>
+<h3 id="c-Dynamic-size-grids"><a href="#c-Dynamic-size-grids" class="headerlink" title="c. Dynamic size grids"></a>c. Dynamic size grids</h3><p>Let’s assume we don’t want to have more than 500 places in a grid so that we can have a faster searching. So, whenever a grid reaches this limit, we break it down into four grids of equal size and distribute places among them. This means thickly populated areas like downtown San Francisco will have a lot of grids, and sparsely populated area like the Pacific Ocean will have large grids with places only around the coastal lines.</p>
+<p><strong>What data-structure can hold this information?</strong> A tree in which each node has four children can serve our purpose. Each node will represent a grid and will contain information about all the places in that grid. If a node reaches our limit of 500 places, we will break it down to create four child nodes under it and distribute places among them. In this way, all the leaf nodes will represent the grids that cannot be further broken down. So leaf nodes will keep a list of places with them. This tree structure in which each node can have four children is called a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Quadtree">QuadTree</a></p>
+<p><img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/305638304_10220946481067343_3475970560453112676_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=0debeb&_nc_ohc=p7H3iEZ0jO8AX9yyB1-&_nc_ht=scontent-sjc3-1.xx&oh=00_AT9p7VxOfUhbGCwmZNcKODfiXMsx7Hnms86RwDSueXKLRw&oe=6337381E" alt="image"></p>
+<p><strong>How will we build a QuadTree?</strong> We will start with one node that will represent the whole world in one grid. Since it will have more than 500 locations, we will break it down into four nodes and distribute locations among them. We will keep repeating this process with each child node until there are no nodes left with more than 500 locations.</p>
+<p><strong>How will we find the grid for a given location?</strong> We will start with the root node and search downward to find our required node&#x2F;grid. At each step, we will see if the current node we are visiting has children. If it has, we will move to the child node that contains our desired location and repeat this process. If the node does not have any children, then that is our desired node.</p>
+<p><strong>How will we find neighboring grids of a given grid?</strong> Since only leaf nodes contain a list of locations, we can connect all leaf nodes with a doubly linked list. This way we can iterate forward or backward among the neighboring leaf nodes to find out our desired locations. Another approach for finding adjacent grids would be through parent nodes. We can keep a pointer in each node to access its parent, and since each parent node has pointers to all of its children, we can easily find siblings of a node. We can keep expanding our search for neighboring grids by going up through the parent pointers.</p>
+<p>Once we have nearby LocationIDs, we can query the backend database to find details about those places.</p>
+<p><strong>What will be the search workflow?</strong> We will first find the node that contains the user’s location. If that node has enough desired places, we can return them to the user. If not, we will keep expanding to the neighboring nodes (either through the parent pointers or doubly linked list) until either we find the required number of places or exhaust our search based on the maximum radius.</p>
+<p><strong>How much memory will be needed to store the QuadTree?</strong> For each Place, if we cache only LocationID and Lat&#x2F;Long, we would need 12GB to store all places.</p>
+<center> 24 * 500M => 12 GB </center>
+
+<p>Since each grid can have a maximum of 500 places, and we have 500M locations, how many total grids we will have?</p>
+<center>500M / 500 => 1M grids</center>
+
+<p>Which means we will have 1M leaf nodes and they will be holding 12GB of location data. A QuadTree with 1M leaf nodes will have approximately 1&#x2F;3rd internal nodes, and each internal node will have 4 pointers (for its children). If each pointer is 8 bytes, then the memory we need to store all internal nodes would be:</p>
+<center>1M * 1/3 * 4 * 8 = 10 MB</center>
+
+<p>So, total memory required to hold the whole QuadTree would be 12.01GB. This can easily fit into a modern-day server.</p>
+<p><strong>How would we insert a new Place into our system?</strong> Whenever a new Place is added by a user, we need to insert it into the databases as well as in the QuadTree. If our tree resides on one server, it is easy to add a new Place, but if the QuadTree is distributed among different servers, first we need to find the grid&#x2F;server of the new Place and then add it there (discussed in the next section).</p>
+<h2 id="7-Data-Partitioning"><a href="#7-Data-Partitioning" class="headerlink" title="7. Data Partitioning"></a>7. Data Partitioning</h2><p>What if we have a huge number of places such that our index does not fit into a single machine’s memory? With 20% growth each year we will reach the memory limit of the server in the future. Also, what if one server cannot serve the desired read traffic? To resolve these issues, we must partition our QuadTree!</p>
+<p>We will explore two solutions here (both of these partitioning schemes can be applied to databases, too):</p>
+<p><strong>a. Sharding based on regions</strong>: We can divide our places into regions (like zip codes), such that all places belonging to a region will be stored on a fixed node. To store a place we will find the server through its region and, similarly, while querying for nearby places we will ask the region server that contains user’s location. This approach has a couple of issues:</p>
+<ol>
+<li>What if a region becomes hot? There would be a lot of queries on the server holding that region, making it perform slow. This will affect the performance of our service.</li>
+<li>Over time, some regions can end up storing a lot of places compared to others. Hence, maintaining a uniform distribution of places, while regions are growing is quite difficult.</li>
+</ol>
+<p>To recover from these situations, either we have to repartition our data or use consistent hashing.</p>
+<p><strong>b. Sharding based on LocationID</strong>: Our hash function will map each LocationID to a server where we will store that place. While building our QuadTree, we will iterate through all the places and calculate the hash of each LocationID to find a server where it would be stored. To find places near a location, we have to query all servers and each server will return a set of nearby places. A centralized server will aggregate these results to return them to the user.</p>
+<p><strong>Will we have different QuadTree structure on different partitions?</strong> Yes, this can happen since it is not guaranteed that we will have an equal number of places in any given grid on all partitions. However, we do make sure that all servers have approximately an equal number of Places. This different tree structure on different servers will not cause any issue though, as we will be searching all the neighboring grids within the given radius on all partitions.</p>
+<p>The remaining part of this chapter assumes that we have partitioned our data based on LocationID.</p>
+<h2 id="8-Replication-and-Fault-Tolerance"><a href="#8-Replication-and-Fault-Tolerance" class="headerlink" title="8. Replication and Fault Tolerance"></a>8. Replication and Fault Tolerance</h2><p>Having replicas of QuadTree servers can provide an alternate to data partitioning. To distribute read traffic, we can have replicas of each QuadTree server. We can have a primary-secondary configuration where replicas (secondaries) will only serve read traffic; all write traffic will first go to the primary and then applied to secondaries. Secondaries might not have some recently inserted places (a few milliseconds delay will be there), but this could be acceptable.</p>
+<p>What will happen when a QuadTree server dies? We can have a secondary replica of each server and, if the primary dies, it can take control after the failover. Both primary and secondary servers will have the same QuadTree structure.</p>
+<p><strong>What if both primary and secondary servers die at the same time?</strong> We have to allocate a new server and rebuild the same QuadTree on it. How can we do that, since we don’t know what places were kept on this server? The brute-force solution would be to iterate through the whole database and filter LocationIDs using our hash function to figure out all the required places that will be stored on this server. This would be inefficient and slow; also, during the time when the server is being rebuilt, we will not be able to serve any query from it, thus missing some places that should have been seen by users.</p>
+<p><strong>How can we efficiently retrieve a mapping between Places and QuadTree server?</strong> We have to build a reverse index that will map all the Places to their QuadTree server. We can have a separate QuadTree Index server that will hold this information. We will need to build a HashMap where the ‘key’ is the QuadTree server number and the ‘value’ is a HashSet containing all the Places being kept on that QuadTree server. We need to store LocationID and Lat&#x2F;Long with each place because information servers can build their QuadTrees through this. Notice that we are keeping Places’ data in a HashSet, this will enable us to add&#x2F;remove Places from our index quickly. So now, whenever a QuadTree server needs to rebuild itself, it can simply ask the QuadTree Index server for all the Places it needs to store. This approach will surely be quite fast. We should also have a replica of the QuadTree Index server for fault tolerance. If a QuadTree Index server dies, it can always rebuild its index from iterating through the database.</p>
+<p><img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309180254_10220946559909314_385458177550335166_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0debeb&_nc_ohc=ch7NsqiUQfwAX9Di7Tt&_nc_ht=scontent-sjc3-1.xx&oh=00_AT_ES2TFEGbvJh9G_nlIrhDN7X5-HDnRntkoFVe90xKAfw&oe=63367979" alt="image"></p>
+<h2 id="9-Cache"><a href="#9-Cache" class="headerlink" title="9. Cache"></a>9. Cache</h2><p>To deal with hot Places, we can introduce a cache in front of our database. We can use an off-the-shelf solution like Memcache, which can store all data about hot places. Application servers, before hitting the backend database, can quickly check if the cache has that Place. Based on clients’ usage pattern, we can adjust how many cache servers we need. For cache eviction policy, Least Recently Used (LRU) seems suitable for our system.</p>
+<h2 id="10-Load-Balancing-LB"><a href="#10-Load-Balancing-LB" class="headerlink" title="10. Load Balancing (LB)"></a>10. Load Balancing (LB)</h2><p>We can add LB layer at two places in our system 1) Between Clients and Application servers and 2) Between Application servers and Backend server. Initially, a simple Round Robin approach can be adopted; that will distribute all incoming requests equally among backend servers. This LB is simple to implement and does not introduce any overhead. Another benefit of this approach is if a server is dead the load balancer will take it out of the rotation and will stop sending any traffic to it.</p>
+<p>A problem with Round Robin LB is, it won’t take server load into consideration. If a server is overloaded or slow, the load balancer will not stop sending new requests to that server. To handle this, a more intelligent LB solution would be needed that periodically queries backend server about their load and adjusts traffic based on that.</p>
+<h2 id="11-Ranking"><a href="#11-Ranking" class="headerlink" title="11. Ranking"></a>11. Ranking</h2><p>How about if we want to rank the search results not just by proximity but also by popularity or relevance?</p>
+<p><strong>How can we return most popular places within a given radius?</strong> Let’s assume we keep track of the overall popularity of each place. An aggregated number can represent this popularity in our system, e.g., how many stars a place gets out of ten (this would be an average of different rankings given by users)? We will store this number in the database as well as in the QuadTree. While searching for the top 100 places within a given radius, we can ask each partition of the QuadTree to return the top 100 places with maximum popularity. Then the aggregator server can determine the top 100 places among all the places returned by different partitions.</p>
+<p>Remember that we didn’t build our system to update place’s data frequently. With this design, how can we modify the popularity of a place in our QuadTree? Although we can search a place and update its popularity in the QuadTree, it would take a lot of resources and can affect search requests and system throughput. Assuming the popularity of a place is not expected to reflect in the system within a few hours, we can decide to update it once or twice a day, especially when the load on the system is minimum.</p>
+
+      
+      <blockquote>
+        
+        <strong>PermaLink: </strong><br><a href="https://jssu.github.io/2022/09/26/yelp-nearby-friends/">https://jssu.github.io/2022/09/26/yelp-nearby-friends/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+        <a class="mdui-ripple article_tags-link" href="/tags/sysDesign/" rel="tag">sysDesign</a>
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2022/09/21/island-count/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'island count'}">Next</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2022 Junsu Shen<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>
