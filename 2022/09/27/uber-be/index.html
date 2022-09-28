@@ -12,16 +12,16 @@
 
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="JSSU Blog" type="application/atom+xml">
-  <meta name="description" content="Designing Uber backendLet’s design a ride-sharing service like Uber, which connects passengers who need a ride with drivers who have a car.    1. What is Uber? 2. Requirements and Goals of the System">
+  <meta name="description" content="Designing Uber backendLet’s design a ride-sharing service like Uber, which connects passengers who need a ride with drivers who have a car.    1. What is Uber?# 2. Requirements and Goals of the System">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uber_be">
 <meta property="og:url" content="https://jssu.github.io/2022/09/27/uber-be/index.html">
 <meta property="og:site_name" content="JSSU Blog">
-<meta property="og:description" content="Designing Uber backendLet’s design a ride-sharing service like Uber, which connects passengers who need a ride with drivers who have a car.    1. What is Uber? 2. Requirements and Goals of the System">
+<meta property="og:description" content="Designing Uber backendLet’s design a ride-sharing service like Uber, which connects passengers who need a ride with drivers who have a car.    1. What is Uber?# 2. Requirements and Goals of the System">
 <meta property="og:locale">
 <meta property="og:image" content="https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/309624435_10220950724453425_6177512686405739293_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=0debeb&_nc_ohc=N6zcPvdmgNQAX9tQwsR&_nc_ht=scontent-sjc3-1.xx&oh=00_AT9iGzfBwNisBoRf8IfpfCV172Wk1X67BkPXxlTlVM-o6A&oe=63383BD2">
 <meta property="article:published_time" content="2022-09-28T02:48:29.000Z">
-<meta property="article:modified_time" content="2022-09-28T03:59:29.100Z">
+<meta property="article:modified_time" content="2022-09-28T04:11:46.473Z">
 <meta property="article:author" content="Junsu Shen">
 <meta property="article:tag" content="sysDesign">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
   <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
   <article class="mdui-card mdui-m-b-5">
     <header class="mdui-card-media">
-      <img src="/images/random/material-2.png" style="max-height: 240px;">
+      <img src="/images/random/material-18.png" style="max-height: 240px;">
       <div class="mdui-card-media-covered">
         <div class="mdui-card-primary">
           <div class="mdui-card-primary-title">uber_be</div>
@@ -235,9 +235,9 @@
 <!-- toc -->
 
 <ul>
-<li><a href="#1-what-is-uber-">1. What is Uber?</a></li>
-<li><a href="#2-requirements-and-goals-of-the-system">2. Requirements and Goals of the System</a></li>
-<li><a href="#3-capacity-estimation-and-constraints">3. Capacity Estimation and Constraints</a></li>
+<li><a href="#1-what-is-uber--">1. What is Uber?#</a></li>
+<li><a href="#2-requirements-and-goals-of-the-system-">2. Requirements and Goals of the System#</a></li>
+<li><a href="#3-capacity-estimation-and-constraints-">3. Capacity Estimation and Constraints#</a></li>
 <li><a href="#4-basic-system-design-and-algorithm">4. Basic System Design and Algorithm</a></li>
 <li><a href="#5-fault-tolerance-and-replication">5. Fault Tolerance and Replication</a></li>
 <li><a href="#6-ranking">6. Ranking</a></li>
@@ -245,8 +245,8 @@
 </ul>
 <!-- tocstop -->
 
-<h3 id="1-What-is-Uber"><a href="#1-What-is-Uber" class="headerlink" title="1. What is Uber?"></a>1. What is Uber?</h3><p>Uber enables its customers to book drivers for taxi rides. Uber drivers use their personal cars to drive customers around. Both customers and drivers communicate with each other through their smartphones using the Uber app.</p>
-<h3 id="2-Requirements-and-Goals-of-the-System"><a href="#2-Requirements-and-Goals-of-the-System" class="headerlink" title="2. Requirements and Goals of the System"></a>2. Requirements and Goals of the System</h3><p>Let’s start with building a simpler version of Uber.</p>
+<h3 id="1-What-is-Uber"><a href="#1-What-is-Uber" class="headerlink" title="1. What is Uber?#"></a>1. What is Uber?#</h3><p>Uber enables its customers to book drivers for taxi rides. Uber drivers use their personal cars to drive customers around. Both customers and drivers communicate with each other through their smartphones using the Uber app.</p>
+<h3 id="2-Requirements-and-Goals-of-the-System"><a href="#2-Requirements-and-Goals-of-the-System" class="headerlink" title="2. Requirements and Goals of the System#"></a>2. Requirements and Goals of the System#</h3><p>Let’s start with building a simpler version of Uber.</p>
 <p>There are two types of users in our system: 1) Drivers 2) Customers.</p>
 <ul>
 <li>Drivers need to regularly notify the service about their current location and their availability to pick passengers.</li>
@@ -255,7 +255,7 @@
 <li>Once a driver and a customer accept a ride, they can constantly see each other’s current location until the trip finishes.</li>
 <li>Upon reaching the destination, the driver marks the journey complete to become available for the next ride.</li>
 </ul>
-<h3 id="3-Capacity-Estimation-and-Constraints"><a href="#3-Capacity-Estimation-and-Constraints" class="headerlink" title="3. Capacity Estimation and Constraints"></a>3. Capacity Estimation and Constraints</h3><ul>
+<h3 id="3-Capacity-Estimation-and-Constraints"><a href="#3-Capacity-Estimation-and-Constraints" class="headerlink" title="3. Capacity Estimation and Constraints#"></a>3. Capacity Estimation and Constraints#</h3><ul>
 <li>Let’s assume we have 300M customers and 1M drivers with 1M daily active customers and 500K daily active drivers.</li>
 <li>Let’s assume 1M daily rides.</li>
 <li>Let’s assume that all active drivers notify their current location every three seconds.</li>
@@ -314,7 +314,7 @@
 <h3 id="7-Advanced-Issues"><a href="#7-Advanced-Issues" class="headerlink" title="7. Advanced Issues"></a>7. Advanced Issues</h3><ol>
 <li>How will we handle clients on slow and disconnecting networks?</li>
 <li>What if a client gets disconnected when they are a part of a ride? How will we handle billing in such a scenario?</li>
-<li>How about if clients pull all the information, compared to servers always pushing it</li>
+<li>How about if clients pull all the information, compared to servers always pushing it?</li>
 </ol>
 
       
